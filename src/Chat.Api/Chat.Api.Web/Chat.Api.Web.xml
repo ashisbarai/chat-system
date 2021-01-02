@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Chat.Api.Web</name>
+    </assembly>
+    <members>
+        <member name="T:Chat.Api.Web.Chats.ChatController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Chat.Api.Web.Chats.ChatController.#ctor(Microsoft.AspNetCore.SignalR.IHubContext{Chat.Api.Web.Hubs.ChatHub},Chat.Api.Core.Chats.ChatService)">
+            <summary>
+            
+            </summary>
+            <param name="hubContext"></param>
+            <param name="chatService"></param>
+        </member>
+        <member name="M:Chat.Api.Web.Chats.ChatController.SendRequest(Chat.Api.Core.Messages.MessageDto)">
+            <summary>
+            
+            </summary>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Api.Web.Chats.ChatController.CreateUserAsync(Chat.Api.Core.Chats.ChatInfo)">
+            <summary>
+            
+            </summary>
+            <param name="chat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Api.Web.Chats.ChatController.GetUsersChatByUserIdAsync(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Chat.Api.Web.Users.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Chat.Api.Web.Users.UserController.#ctor(Chat.Api.Core.Users.UserService)">
+            <summary>
+            
+            </summary>
+            <param name="userService"></param>
+        </member>
+        <member name="M:Chat.Api.Web.Users.UserController.CreateUserAsync(Chat.Api.Core.Users.UserInfo)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Api.Web.Users.UserController.GetAllUsersAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Api.Web.Users.UserController.GetAllFriendsByUserIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Api.Web.Users.UserController.GetUserByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
