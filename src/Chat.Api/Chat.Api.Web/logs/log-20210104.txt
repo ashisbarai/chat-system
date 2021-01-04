@@ -1,0 +1,2 @@
+{"Timestamp":"2021-01-04T20:36:06.0916048+06:00","Level":"Information","MessageTemplate":"Starting web host"}
+{"Timestamp":"2021-01-04T23:45:43.3382669+06:00","Level":"Information","MessageTemplate":"Starting web host"}

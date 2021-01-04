@@ -79,5 +79,41 @@ namespace Chat.Api.Web.Chats
                 return StatusCode(StatusCodes.Status500InternalServerError, e);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("DeleteUsersChatByUserId/{userId:int}/{friendId:int}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUsersChatByUserIdAsync(int userId, int friendId)
+        {
+            try
+            {
+                await _chatService.DeleteUsersChatByUserIdAsync(userId, friendId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("DeleteChatById/{id:int}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteChatByIdAsync(int id)
+        {
+            try
+            {
+                await _chatService.DeleteChatByIdAsync(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
+        }
     }
 }

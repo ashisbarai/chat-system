@@ -4,4 +4,5 @@ export class MessageDto {
     public receiver?: number = null;
     public message: string = '';
     public receivedOn?: Date = null;
+    public showButton: boolean = false;
   }

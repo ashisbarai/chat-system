@@ -36,6 +36,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Chat.Api.Web.Chats.ChatController.DeleteUsersChatByUserIdAsync(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Chat.Api.Web.Chats.ChatController.DeleteChatByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Chat.Api.Web.Users.UserController">
             <summary>
             

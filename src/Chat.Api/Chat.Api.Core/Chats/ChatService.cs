@@ -42,5 +42,16 @@ namespace Chat.Api.Core.Chats
                 "ORDER BY [ReceivedOn]");
             return await _database.QueryAsync<ChatInfo>(sql, new{Id=userId, FriendId=friendId});
         }
+        public async Task DeleteUsersChatByUserIdAsync(int userId, int friendId)
+        {
+            string sql = string.Join(Environment.NewLine, "DELETE FROM [dbo].[Chats]",
+                "WHERE (Sender=@Id AND Receiver=@FriendId) OR (Sender=@FriendId AND Receiver=@Id)");
+             await _database.ExecuteAsync(sql, new { Id = userId, FriendId = friendId });
+        }
+
+        public async Task DeleteChatByIdAsync(int id)
+        {
+            await _database.ExecuteAsync("DELETE [dbo].[Chats]  WHERE Id=@Id", new {Id = id});
+        }
     }
 }

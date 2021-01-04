@@ -75,5 +75,10 @@ export class ChatService {
    getUsersChatByUserId(userId: number, friendId: number): Observable<MessageDto[]> {
     return this.http.get<MessageDto[]>(Constants.apiRoot + 'GetUsersChatByUserId/' + userId + '/' + friendId);
   }
- 
+  deleteChatById(id: number): any {
+    return this.http.delete<any>(Constants.apiRoot + 'DeleteChatById/' + id);
+  }
+  deleteUsersChatByUserId(userId: number, friendId: number): any {
+    return this.http.delete<any>(Constants.apiRoot + 'DeleteUsersChatByUserId/' + userId + '/' + friendId);
+  }
  }

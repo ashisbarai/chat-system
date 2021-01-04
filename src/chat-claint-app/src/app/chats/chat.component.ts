@@ -4,6 +4,7 @@ import { ChatService } from 'src/app/chats/chat.service';
 import { MessageDto } from 'src/app/chats/message';
 import { AuthService } from 'src/app/core/auth-service.service';
 import { UserService } from '../users/user.service';
+import * as $ from 'jquery'
 
 @Component({
     selector: 'app-chat',
@@ -38,13 +39,13 @@ export class ChatComponent implements OnInit {
     }
 
   msgDto: MessageDto = new MessageDto();
-  msgInboxArray: MessageDto[] = [];
+  cahtList: MessageDto[] = [];
   getName(id: number){
     return id == this.userId ? this.userName : this.toUserName;
   }
   getUsersChatByUserId(userId: number, friendId: number){
      this.chatService.getUsersChatByUserId(userId, friendId).subscribe((messages)=>{
-       this.msgInboxArray = messages;
+       this.cahtList = messages;
      })
   }
   send(): void {
@@ -65,7 +66,7 @@ export class ChatComponent implements OnInit {
     newObj.sender = obj.sender;
     newObj.receiver = obj.receiver;
     newObj.message = obj.message;
-    this.msgInboxArray.push(newObj);
+    this.cahtList.push(newObj);
     this.scrollDown(this.chatContainer);
   }
   scrollDown(container){
@@ -76,5 +77,14 @@ export class ChatComponent implements OnInit {
     logout(){
         this._authService.logout();
     }
-    
+    deleteChat(id: number){
+      if(confirm('Are you sure?')){
+        this.chatService.deleteChatById(id).subscribe((res)=>{
+          var index = this.cahtList.findIndex(c=>c.id == id);
+          if(index > -1){
+            this.cahtList.splice(index, 1);
+          }
+        });
+      }
+    }
 }

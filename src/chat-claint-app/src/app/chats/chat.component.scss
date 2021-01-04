@@ -5,4 +5,45 @@
     //height: 400px;
     max-height: 400px;
     overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top: 10px;
+}
+.chat-container div{
+    padding-right: 20px;
+    padding-left: 20px;
+    display: table;
+}
+.chat-container div.reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.chat-container p{
+    position: relative;
+    background-color: #f5f6f7;
+    color: #9b9b9b;
+    padding: 10px;
+    border-radius: 3px;
+    margin-bottom: 5px !important;
+}
+.chat-container div.reverse p{
+    float: right;
+    clear: right;
+    background-color: #48b0f7;
+    color: #fff;
+}
+.remove-button{
+    width: inherit;
+    height: inherit;
+    line-height: 0;
+    position: absolute;
+    top: 8px;
+    right: -23px;
+}
+
+.node .remove-button{
+    display: none;
+}
+
+.node:hover .remove-button {
+    display: flex;
 }
