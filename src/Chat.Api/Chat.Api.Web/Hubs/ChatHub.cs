@@ -1,44 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using Chat.Api.Core.Chats;
-using Chat.Api.Core.Chats.Events;
-using Chat.Api.Core.Events;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Chat.Api.Web.Hubs
 {
+    [Authorize]
     public class ChatHub : Hub
     {
-        private readonly EventService _eventService;
-        public static Dictionary<int, string> ClientMapper = new Dictionary<int, string>();
+        private readonly ChatService _chatService;
 
-        public ChatHub(EventService eventService)
+        public ChatHub(ChatService chatService)
         {
-            _eventService = eventService;
+            _chatService = chatService;
         }
         public async Task Send(int sender, int receiver, string message)
         {
-            string connectionId;
-            ClientMapper.TryGetValue(receiver, out connectionId);
-            string senderConnectionId;
-            ClientMapper.TryGetValue(sender, out senderConnectionId);
-            //return Clients.All.SendAsync("ReceiveOne", user, message);
-            await _eventService.PublishAsync(new ChatSendEvent(new ChatInfo
-                {Sender = sender, Receiver = receiver, Message = message}));
+            try
+            {
+                var chat = new ChatInfo
+                    {UserId = sender, FriendId = receiver, Message = message};
 
-            await Clients.Clients(connectionId ?? "", senderConnectionId ?? "").SendAsync("ReceiveOne", receiver, sender, message);
-        }
-        public string GetConnectionId(int id)
-        {
-            if (ClientMapper.ContainsKey(id))
-            {
-                ClientMapper[id] = Context.ConnectionId;
+                var senderMessage = await _chatService.CreateChatAsync(chat.ToSenderChatInfo());
+                var receiverMessage = await _chatService.CreateChatAsync(chat.ToReceiverChatInfo());
+
+                await Clients.User(receiver.ToString()).SendAsync("ReceiveOne", receiverMessage);
+                await Clients.User(sender.ToString()).SendAsync("ReceiveOne", senderMessage);
             }
-            else
+            catch (Exception e)
             {
-                ClientMapper.Add(id, Context.ConnectionId);
+                Console.WriteLine(e);
+                throw;
             }
-            return Context.ConnectionId;
+
         }
     }
 }

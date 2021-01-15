@@ -13,7 +13,8 @@ namespace Chat.Api.Core.Chats.Events
         }
         public async Task RunAsync(ChatSendEvent obj)
         {
-            await _chatService.CreateChatAsync(obj.ChatInfo);
+            await _chatService.CreateChatAsync(obj.ChatInfo.ToSenderChatInfo());
+            await _chatService.CreateChatAsync(obj.ChatInfo.ToReceiverChatInfo());
         }
     }
 }

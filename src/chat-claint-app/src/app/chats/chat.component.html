@@ -25,9 +25,10 @@
         <h2>{{toUserName}}</h2>
         <mat-divider></mat-divider>
         <div #chatContainer class="chat-container">
-          <div *ngFor="let chat of cahtList" [ngClass]="userId === chat.sender ? 'align-right reverse node' : 'node'">
+          <div *ngFor="let chat of cahtList" [ngClass]="chat.messageType === 1 ? 'align-right reverse node' : 'node'">
             <p>
-              <span>{{chat.message}}</span>
+              <span>{{chat.message}}</span><br>
+              <span class="chat-time d-flex justify-content-end">{{chat.createdOn | date: 'd/M/yy, h:mm a'}}</span>
               <button mat-icon-button color="warn" aria-label="Remove" class="remove-button" (click)="deleteChat(chat.id)">
                 <mat-icon>delete</mat-icon>
               </button>

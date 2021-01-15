@@ -4,7 +4,6 @@ import { ChatService } from 'src/app/chats/chat.service';
 import { MessageDto } from 'src/app/chats/message';
 import { AuthService } from 'src/app/core/auth-service.service';
 import { UserService } from '../users/user.service';
-import * as $ from 'jquery'
 
 @Component({
     selector: 'app-chat',
@@ -53,9 +52,9 @@ export class ChatComponent implements OnInit {
       if(this.msgDto.message.length == 0){
         return;
       } else {
-        this.msgDto.sender = this.userId;
-        this.msgDto.receiver = this.toUserId;
-        this.chatService.broadcastMessage(this.msgDto);
+        this.msgDto.userId = this.userId;
+        this.msgDto.friendId = this.toUserId;
+        this.chatService.sendMessage(this.msgDto);
         this.msgDto.message = '';
       }
     }
@@ -63,10 +62,15 @@ export class ChatComponent implements OnInit {
 
   addToInbox(obj: MessageDto) {
     let newObj = new MessageDto();
-    newObj.sender = obj.sender;
-    newObj.receiver = obj.receiver;
+    newObj.userId = obj.userId;
+    newObj.friendId = obj.friendId;
     newObj.message = obj.message;
+    newObj.id = obj.id;
+    newObj.messageType = obj.messageType;
+    newObj.createdOn = obj.createdOn;
     this.cahtList.push(newObj);
+
+    console.log(newObj);
     this.scrollDown(this.chatContainer);
   }
   scrollDown(container){

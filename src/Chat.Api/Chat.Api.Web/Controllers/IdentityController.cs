@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.Api.Web.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("identity")]
     [Authorize]
     public class IdentityController : ControllerBase

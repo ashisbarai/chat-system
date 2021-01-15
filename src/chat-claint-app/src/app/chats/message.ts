@@ -1,8 +1,9 @@
 export class MessageDto {
     public id?: number = null;
-    public sender?: number = null;
-    public receiver?: number = null;
+    public userId?: number = null;
+    public friendId?: number = null;
+    public messageType?: number = null;
     public message: string = '';
-    public receivedOn?: Date = null;
+    public createdOn?: Date = null;
     public showButton: boolean = false;
   }

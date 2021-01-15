@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Chat.Api.Core.Chats;
 using Chat.Api.Core.Messages;
 using Chat.Api.Web.Hubs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -14,6 +15,7 @@ namespace Chat.Api.Web.Chats
     /// </summary>
     [Route("api")]
     [ApiController]
+    [Authorize]
     public class ChatController : ControllerBase
     {
         private readonly IHubContext<ChatHub> _hubContext;
@@ -31,38 +33,39 @@ namespace Chat.Api.Web.Chats
         }
 
         /// <summary>
-        /// 
+        /// This API is used for sending a message
         /// </summary>
+        /// <remarks>
+        /// ```
+        /// Request body:
+        /// {
+        ///     "Sender": "1",
+        ///     "Receiver": "2",
+        ///     "Message": "message from api"
+        /// }
+        /// UserId: Sender user id
+        /// FriendId: Receiver user id
+        /// </remarks>
         /// <param name="msg"></param>
         /// <returns></returns>
-        [Route("SendMessage")]                                           //path looks like this: https://localhost:44379/api/chat/send
+        [Route("SendMessage")]
         [HttpPost]
-        public IActionResult SendRequest([FromBody] MessageDto msg)
+        public async Task<IActionResult> SendMessageAsync([FromBody] MessageDto msg)
         {
-            _hubContext.Clients.User(msg.User).SendAsync("ReceiveOne", msg.User, msg.MsgText);
+            var chat = new ChatInfo
+                {UserId = msg.Sender, FriendId = msg.Receiver, Message = msg.Message};
+
+            var senderMessage = await _chatService.CreateChatAsync(chat.ToSenderChatInfo());
+            var receiverMessage = await _chatService.CreateChatAsync(chat.ToReceiverChatInfo());
+
+            await _hubContext.Clients.User(msg.Receiver.ToString()).SendAsync("ReceiveOne", receiverMessage);
+            await _hubContext.Clients.User(msg.Sender.ToString()).SendAsync("ReceiveOne", senderMessage);
+
             return Ok();
         }
+
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="chat"></param>
-        /// <returns></returns>
-        [Route("CreateChat")]
-        [HttpPost]
-        public async Task<IActionResult> CreateUserAsync([FromBody] ChatInfo chat)
-        {
-            try
-            {
-                var newChat = await _chatService.CreateChatAsync(chat);
-                return Ok(newChat);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e);
-            }
-        }
-        /// <summary>
-        /// 
+        /// This API gets user's messages for a specific friend.
         /// </summary>
         /// <returns></returns>
         [Route("GetUsersChatByUserId/{userId:int}/{friendId:int}")]

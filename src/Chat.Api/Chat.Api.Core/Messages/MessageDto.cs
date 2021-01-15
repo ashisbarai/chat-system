@@ -2,7 +2,8 @@
 {
     public class MessageDto
     {
-        public string User { get; set; }
-        public string MsgText { get; set; }
+        public int Sender { get; set; }
+        public int Receiver { get; set; }
+        public string Message { get; set; }
     }
 }

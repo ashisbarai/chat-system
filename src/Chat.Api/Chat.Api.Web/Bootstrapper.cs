@@ -21,7 +21,7 @@ namespace Chat.Api.Web
             services.AddTransient<IDatabase, Database>();
             BuildApiKeyConfig(services, configuration);
 
-            RegisterEvents(services);
+            //RegisterEvents(services);
 
             services.AddScoped<DatabaseTestService>();
             services.AddScoped<UserService>();

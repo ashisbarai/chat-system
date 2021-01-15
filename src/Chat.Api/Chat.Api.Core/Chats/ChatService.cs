@@ -17,36 +17,40 @@ namespace Chat.Api.Core.Chats
 
         public async Task<ChatInfo> CreateChatAsync(ChatInfo chat)
         {
-            string sql = string.Join(Environment.NewLine, "INSERT INTO [dbo].[Chats]([Message],[Sender],[Receiver])",
-                "VALUES(@Message,@Sender,@Receiver)",
+            string sql = string.Join(Environment.NewLine, "INSERT INTO [dbo].[Chats]([Message],[UserId],[FriendId],[MessageType])",
+                "VALUES(@Message,@UserId,@FriendId,@MessageType)",
                 "SELECT SCOPE_IDENTITY()");
             var id = (await _database.QueryAsync<int>(sql, new
             {
                 Message = chat.Message,
-                Sender = chat.Sender,
-                Receiver = chat.Receiver
+                UserId = chat.UserId,
+                FriendId = chat.FriendId,
+                MessageType = chat.MessageType
             })).First();
             return await GetChatByIdAsync(id);
         }
 
         public async Task<ChatInfo> GetChatByIdAsync(int id)
         {
-            string sql = string.Join(Environment.NewLine, "SELECT [Id],[Message],[Sender],[Receiver],[ReceivedOn]",
+            string sql = string.Join(Environment.NewLine, "SELECT [Id],[Message],[UserId],[FriendId],[MessageType],[CreatedOn]",
                 "FROM [dbo].[Chats] WHERE Id=@Id");
             return (await _database.QueryAsync<ChatInfo>(sql, new {Id = id})).FirstOrDefault();
         }
+
         public async Task<IEnumerable<ChatInfo>> GetUsersChatByUserIdAsync(int userId, int friendId)
         {
-            string sql = string.Join(Environment.NewLine, "SELECT [Id],[Message],[Sender],[Receiver],[ReceivedOn]",
-                "FROM [dbo].[Chats] WHERE (Sender=@Id AND Receiver=@FriendId) OR (Sender=@FriendId AND Receiver=@Id)",
-                "ORDER BY [ReceivedOn]");
-            return await _database.QueryAsync<ChatInfo>(sql, new{Id=userId, FriendId=friendId});
+            string sql = string.Join(Environment.NewLine,
+                "SELECT [Id],[Message],[UserId],[FriendId],[MessageType],[CreatedOn]",
+                "FROM [dbo].[Chats] WHERE UserId=@UserId AND FriendId=@FriendId",
+                "ORDER BY [CreatedOn]");
+            return await _database.QueryAsync<ChatInfo>(sql, new {UserId = userId, FriendId = friendId});
         }
+
         public async Task DeleteUsersChatByUserIdAsync(int userId, int friendId)
         {
             string sql = string.Join(Environment.NewLine, "DELETE FROM [dbo].[Chats]",
-                "WHERE (Sender=@Id AND Receiver=@FriendId) OR (Sender=@FriendId AND Receiver=@Id)");
-             await _database.ExecuteAsync(sql, new { Id = userId, FriendId = friendId });
+                "WHERE UserId=@UserId AND FriendId=@FriendId");
+             await _database.ExecuteAsync(sql, new { UserId = userId, FriendId = friendId });
         }
 
         public async Task DeleteChatByIdAsync(int id)

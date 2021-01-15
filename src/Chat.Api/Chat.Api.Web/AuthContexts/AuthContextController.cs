@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.Api.Web.AuthContexts
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [ApiController]
     [Authorize]
     [Route("api")]

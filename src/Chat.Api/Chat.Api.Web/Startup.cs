@@ -44,6 +44,15 @@ namespace Chat.Api.Web
                     options.Authority = "https://localhost:44368";
                     //options.ApiName = "infra-doc-chng-mgmt-sys";
                     //options.RequireHttpsMetadata = false;
+                    //options.RequireHttpsMetadata = false;
+                    //options.ApiName = "my-api";
+                    //options.NameClaimType = "sub";
+                    //options.TokenRetriever = new Func<HttpRequest, string>(req =>
+                    //{
+                    //    var fromHeader = TokenRetrieval.FromAuthorizationHeader();
+                    //    var fromQuery = TokenRetrieval.FromQueryString();
+                    //    return fromHeader(req) ?? fromQuery(req);
+                    //});
                 });
 
             //services.AddMvc(option =>
@@ -88,6 +97,7 @@ namespace Chat.Api.Web
             app.UseRouting();
 
             app.UseMiddleware<ApiKeyMiddleware>();
+            app.UseMiddleware<WebSocketsMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -98,7 +108,7 @@ namespace Chat.Api.Web
                 setupAction.InjectStylesheet("/assets/custom-ui.css");
                 setupAction.IndexStream = () => GetType().Assembly.GetManifestResourceStream("Chat.Api.Web.EmbeddedAssets.index.html");
 
-                setupAction.SwaggerEndpoint("/swagger/Chat/swagger.json", "Chat API");
+                setupAction.SwaggerEndpoint("/swagger/ChatOpenAPISpecification/swagger.json", "Chat API");
                 setupAction.RoutePrefix = string.Empty;
             });
 

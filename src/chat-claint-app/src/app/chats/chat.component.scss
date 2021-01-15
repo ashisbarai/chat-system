@@ -19,24 +19,26 @@
 }
 .chat-container p{
     position: relative;
-    background-color: #f5f6f7;
-    color: #9b9b9b;
-    padding: 10px;
+    background-color: #f2f2f2;
+    //color: #9b9b9b;
+    color: #262626;
+    padding: 5px 5px 0px 5px;
     border-radius: 3px;
     margin-bottom: 5px !important;
+    font-size: 15px;
 }
 .chat-container div.reverse p{
     float: right;
     clear: right;
-    background-color: #48b0f7;
-    color: #fff;
+    background-color: #ccebff;
+    color:#262626;
 }
 .remove-button{
     width: inherit;
     height: inherit;
     line-height: 0;
     position: absolute;
-    top: 8px;
+    top: 10px;
     right: -23px;
 }
 
@@ -46,4 +48,8 @@
 
 .node:hover .remove-button {
     display: flex;
+}
+.chat-time{
+    font-size: 10px;
+    color: #8c8c8c;
 }
