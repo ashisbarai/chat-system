@@ -16,9 +16,9 @@ Importing database
 ###### Dowload Tools
 Download visual studio from here Visual studio 2019 (If you don't already have). Install it on your system.
 ###### Edit DB Connection String
-* Go to Chat\src\Chat.Api\Chat.Api.Web directory, open appsettings.json file.
+* Go to src\Chat.Api\Chat.Api.Web directory, open appsettings.json file.
 * Find this section- `"ConnectionStrings": { "ConnectionString": "Server=<Server_name>;Database=ChatSystem;Trusted_Connection=True;MultipleActiveResultSets=True;" }`,
-* Go to Chat\src\Chat.DIP.IS4 directory, open appsettings.json file.
+* Go to src\Chat.DIP.IS4 directory, open appsettings.json file.
 * Find this section- `"ConnectionStrings": { "ConnectionString": "Server=<Server_name>;Database=ChatSystem;Trusted_Connection=True;MultipleActiveResultSets=True;" }`,
 * Enter database server name in the place of <server_name>. Ther server name can be found on sql server management studio. 
 ### How to run the project with visual studio
@@ -39,7 +39,7 @@ This project was generated with Angular CLI version 11.0.0.
 I prefer Visual studio code, but we can use any dev friendly text editor.
 * Download and install Visual studio code
 ###### Installing packages
-* Open the Chat\src\chat-claint-app project with VS code.
+* Open the src\chat-claint-app project with VS code.
 * Click on terminal on the top toolbar
 * A terminal will open on the bottom side of VS code. Run command npm install on terminal to install the packages. (This may take some time).
 Run the project on Development server
