@@ -1,9 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from 'src/app/chats/chat.service';
 import { MessageDto } from 'src/app/chats/message';
 import { AuthService } from 'src/app/core/auth-service.service';
+import { IUserInfo } from '../users/user-info';
 import { UserService } from '../users/user.service';
+const SMALL_WIDTH_BREAKPOINT = 720;
 
 @Component({
     selector: 'app-chat',
@@ -12,16 +16,33 @@ import { UserService } from '../users/user.service';
 })
 
 export class ChatComponent implements OnInit {
+  public isScreenSmall: boolean;
   @ViewChild('chatContainer') private chatContainer: ElementRef;
+  @ViewChild(MatSidenav) sidenav: MatSidenav;
   
+
     constructor(private _authService: AuthService, private chatService: ChatService, 
-      private activeRoute: ActivatedRoute, private userService: UserService) {
+      private activeRoute: ActivatedRoute, private userService: UserService, 
+      private breakpointObserver: BreakpointObserver, private router: Router) {
      }
     toUserId: number;
     toUserName: string;
     userId: number;
     userName: string;
+    users: IUserInfo[];
     ngOnInit() { 
+      this.breakpointObserver
+      .observe([ `(max-width: ${SMALL_WIDTH_BREAKPOINT}px)` ])
+      .subscribe((state: BreakpointState) => {
+        this.isScreenSmall = state.matches;
+      });
+
+      this.router.events.subscribe(() => {
+        if (this.isScreenSmall) {
+          this.sidenav.close();
+        }
+      });
+
         this.activeRoute.params.subscribe(params => {
             this.toUserId = +params['id'];
             this.userService.getUserById(this.toUserId).subscribe((user)=>{
@@ -31,12 +52,20 @@ export class ChatComponent implements OnInit {
                   this.userName = authContext.claims.find(c=>c.type=='given_name').value + ' ' + authContext.claims.find(c=>c.type=='family_name').value;
                   this.getUsersChatByUserId(this.userId, this.toUserId);
                   this.scrollDown(this.chatContainer);
+                  this.getAllFriendsByUserId(this.userId);
                 });
             });
          });
         this.chatService.retrieveMappedObject().subscribe( (receivedObj: MessageDto) => { this.addToInbox(receivedObj);});
     }
-
+toggle(){
+  this.sidenav.toggle();
+}
+getAllFriendsByUserId(userId: number){
+  this.userService.getAllFriendsByUserId(userId).subscribe((users)=>{
+    this.users = users;
+  });
+}
   msgDto: MessageDto = new MessageDto();
   cahtList: MessageDto[] = [];
   getName(id: number){

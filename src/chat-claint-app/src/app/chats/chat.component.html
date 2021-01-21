@@ -1,52 +1,78 @@
-<mat-toolbar color="primary" class="m-b-10">
-  
-    <div class="d-flex flex-wrap w-100 justify-content-between">
-      <div class="d-flex">
-        <button mat-button [routerLink]="['/home']">
-          <mat-icon>home</mat-icon> Chat
-        </button>
-      </div>
-  
-      <div class="d-flex">
-        <button mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout()">Logout</button>
-        </mat-menu>
-      </div>
-    </div>
-    
+<mat-sidenav-container class="app-sidenav-container">
+  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall"
+    [mode]="isScreenSmall ? 'over' : 'side'">
+    <mat-toolbar color="primary">
+      <button mat-button [routerLink]="['/home']">
+        <mat-icon>home</mat-icon> Chat
+      </button>
     </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item matLine *ngFor="let user of users" [routerLink]="['/chat', user.id]" routerLinkActive="active-list-item">
+        {{user.fullName}}
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="app-sidenav-content">
+    <mat-toolbar color="primary" class="m-b-10">
   
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <h2>{{toUserName}}</h2>
-        <mat-divider></mat-divider>
-        <div #chatContainer class="chat-container">
-          <div *ngFor="let chat of cahtList" [ngClass]="chat.messageType === 1 ? 'align-right reverse node' : 'node'">
-            <p>
-              <span>{{chat.message}}</span><br>
-              <span class="chat-time d-flex justify-content-end">{{chat.createdOn | date: 'd/M/yy, h:mm a'}}</span>
-              <button mat-icon-button color="warn" aria-label="Remove" class="remove-button" (click)="deleteChat(chat.id)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </p>
-          </div>
+      <button mat-button class="sidenav-toggle" (click)="toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <div class="d-flex flex-wrap w-100 justify-content-end">
+    
+        <div class="d-flex">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">Logout</button>
+          </mat-menu>
         </div>
-        <div class="d-flex m-t-10">
-          <div class="d-flex flex-grow-1">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Type a message" [(ngModel)]="msgDto.message" name="message" (keyup.enter)="send()">
-            </mat-form-field>
+      </div>
+      
+      </mat-toolbar>
+    <div class="wrapper">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <h2>{{toUserName}}</h2>
+          <mat-divider></mat-divider>
+          <div #chatContainer class="chat-container">
+            <div *ngFor="let chat of cahtList" [ngClass]="chat.messageType === 1 ? 'align-right reverse node' : 'node'">
+              <p>
+                <span>{{chat.message}}</span><br>
+                <span class="chat-time d-flex justify-content-end">{{chat.createdOn | date: 'd/M/yy, h:mm a'}}</span>
+                <button mat-icon-button color="warn" aria-label="Remove" class="remove-button" (click)="deleteChat(chat.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </p>
+            </div>
           </div>
-          <div class="d-flex">
-            <button mat-icon-button color="primary" aria-label="Send message" (click)= "send()">
-              <mat-icon>send</mat-icon>
-            </button>
+          <div class="d-flex m-t-10">
+            <div class="d-flex flex-grow-1">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Type a message" [(ngModel)]="msgDto.message" name="message" (keyup.enter)="send()">
+              </mat-form-field>
+            </div>
+            <div class="d-flex">
+              <button mat-icon-button color="primary" aria-label="Send message" (click)= "send()">
+                <mat-icon>send</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+</mat-sidenav-container>
+  
+  
+  
+  
+
+  
+
 
