@@ -97,10 +97,11 @@ getAllFriendsByUserId(userId: number){
     newObj.id = obj.id;
     newObj.messageType = obj.messageType;
     newObj.createdOn = obj.createdOn;
-    this.cahtList.push(newObj);
 
-    console.log(newObj);
-    this.scrollDown(this.chatContainer);
+    if(newObj.friendId === this.toUserId){
+      this.cahtList.push(newObj);
+      this.scrollDown(this.chatContainer);
+    }
   }
   scrollDown(container){
     setTimeout(function(){

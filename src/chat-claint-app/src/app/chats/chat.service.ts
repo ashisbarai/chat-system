@@ -62,7 +62,7 @@ export class ChatService {
      this.receivedMessageObject.id = messageInfo.id;
      this.receivedMessageObject.createdOn = messageInfo.createdOn;
      this.receivedMessageObject.userId = messageInfo.userId;
-     this.receivedMessageObject.friendId = messageInfo.userId;
+     this.receivedMessageObject.friendId = messageInfo.friendId;
      this.receivedMessageObject.message = messageInfo.message;
      this.receivedMessageObject.messageType = messageInfo.messageType;
      //console.log(this.receivedMessageObject);
