@@ -1,8 +1,5 @@
 # Chat System (Server side)
 This project was generated with .NET 5.0
-## Install git
-Download and install git. We need git to work with the repository.
-Database Setup
 ###### DB setup
 * Download and install MS Sql server on your system by visiting here (Ignore if you have already installed).
 * Download SQL server management studio also, if you don't have already installed SSMS.
