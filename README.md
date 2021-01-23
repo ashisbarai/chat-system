@@ -26,6 +26,7 @@ Download visual studio from here Visual studio 2019 (If you don't already have).
 ** Set action to Start for Chat.Api.Web and Chat.DIP.IS4 projects
 ** Click on apply and ok
 * Run the project with IISExpress by clicking on the Start button on the toolbar of visual studio. 
+* Goto https://localhost:44391/index.html for API documentation
 # Chat System (Client side)
 This project was generated with Angular CLI version 11.0.0.
 ## Installing angular
