@@ -27,21 +27,18 @@ Download visual studio from here Visual studio 2019 (If you don't already have).
 ** select Startup Project
 ** Click on multiple projects
 ** Set action to Start for Chat.Api.Web and Chat.DIP.IS4 projects
-#### Click on apply and ok
+** Click on apply and ok
 * Run the project with IISExpress by clicking on the Start button on the toolbar of visual studio. 
 # Chat System (Client side)
 This project was generated with Angular CLI version 11.0.0.
 ## Installing angular
 * We need npm package manager to setup everything. Visit Nodejs , download and install nodejs which will install npm package manager with it.
-* Now install angular cli by running npm install -g @angular/cli command on terminal or command prompt on your machine. Visit Angular CLI for detail.
+* Now install angular cli by running **npm install -g @angular/cli** command on terminal or command prompt on your machine. Visit Angular CLI for detail.
 ## Project setup
-###### Download tools
-I prefer Visual studio code, but we can use any dev friendly text editor.
-* Download and install Visual studio code
 ###### Installing packages
-* Open the src\chat-claint-app project with VS code.
-* Click on terminal on the top toolbar
-* A terminal will open on the bottom side of VS code. Run command npm install on terminal to install the packages. (This may take some time).
-Run the project on Development server
-*After the package has been installed run ng serve --open on the terminal to run the project on a dev server. Navigate to http://localhost:4200/ on your browser.
+* Open windows command prompt 
+* Go to the location src\chat-claint-app.
+* Run command **npm install** on terminal to install the packages. (This may take some time).
+* After the package has been installed run **ng serve --open** to run the project on a dev server. 
+* Navigate to http://localhost:4200/ on your browser.
 * It needs to run both Server and Client side projects at the same time to make the project functional.
