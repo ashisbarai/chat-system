@@ -18,9 +18,11 @@ export class HomeComponent implements OnInit {
     displayedColumns: string[] = ['name', 'email', 'id'];
     users: IUserInfo[];
     userId: number;
+    name: string;
     ngOnInit() { 
       this._authService.getAuthContext().subscribe((authContext)=>{
         this.userId = +authContext.claims.find(c=>c.type=='sub').value;
+        this.name = authContext.claims.find(c=>c.type=='given_name').value + ' ' + authContext.claims.find(c=>c.type=='family_name').value;
         this.getAllFriendsByUserId(this.userId);
       });
     }
